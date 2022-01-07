@@ -12,6 +12,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'node --version'
+                sh 'npm --version'
+                sh 'whoami'
                 sh 'npm cache clean --force'
                 sh 'npm install'
             }
