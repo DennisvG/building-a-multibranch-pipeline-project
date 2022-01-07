@@ -1,7 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:lts-alpine'
+            image 'node:6'
+            args '--tmpfs /.config'
             args '-p 3000:3000 -p 5000:5000' 
         }
     }
@@ -11,7 +12,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'sudo chown -R 992:991 "/.npm"'
                 sh 'npm install'
             }
         }
