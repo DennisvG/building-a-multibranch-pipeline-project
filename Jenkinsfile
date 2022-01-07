@@ -7,25 +7,39 @@ pipeline {
     }
     environment {
         CI = 'true'
+        // home en npm_config_prefix for fixing permission denied error
         HOME = '/tmp'
         NPM_CONFIG_PREFIX = '/tmp/.npm'
     }
     stages {
         stage('Build') {
             steps {
-                sh 'node --version'
-                sh 'npm --version'
-                sh 'id'
-                sh 'pwd'
-                sh 'npm config list'
-                sh 'npm config ls -l'
-                sh 'npm cache clean --force'
                 sh 'npm install'
             }
         }
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
+            }
+        }
+        stage('Deliver for development') {
+            when {
+                branch 'development' 
+            }
+            steps {
+                sh './jenkins/scripts/deliver-for-development.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+        stage('Deploy for production') {
+            when {
+                branch 'production'  
+            }
+            steps {
+                sh './jenkins/scripts/deploy-for-production.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
             }
         }
     }
