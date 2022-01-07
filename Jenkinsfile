@@ -2,13 +2,14 @@ pipeline {
     agent {
         docker {
             image 'node:lts-alpine'
-            args '-e HOME=/tmp -e NPM_CONFIG_PREFIX=/tmp/.npm'
             args '-p 3000:3000 -p 5000:5000' 
         }
     }
-    //environment {
-        //CI = 'true'
-    //}
+    environment {
+        CI = 'true'
+        HOME = '/tmp'
+        NPM_CONFIG_PREFIX = '/tmp/.npm'
+    }
     stages {
         stage('Build') {
             steps {
