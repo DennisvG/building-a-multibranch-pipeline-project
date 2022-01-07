@@ -15,8 +15,9 @@ pipeline {
                 sh 'node --version'
                 sh 'npm --version'
                 sh 'id'
-                sh 'echo "home = $HOME"'
-                sh 'npm config list' 
+                sh 'pwd'
+                sh 'npm config list'
+                sh 'npm config ls -l'
                 sh 'npm cache clean --force'
                 sh 'npm install'
             }
