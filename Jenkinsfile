@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh 'node --version'
                 sh 'npm --version'
-                sh 'whoami'
+                sh 'id'
                 sh 'npm cache clean --force'
                 sh 'npm install'
             }
