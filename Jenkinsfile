@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'node:lts-alpine'
-            args '-v $HOME/.npm:/root/.npm'
             args '-e HOME=/tmp -e NPM_CONFIG_PREFIX=/tmp/.npm'
             args '-p 3000:3000 -p 5000:5000' 
         }
